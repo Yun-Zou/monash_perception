@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(monash_perception)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -10,8 +10,15 @@ project(monash_perception)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf
+  sensor_msgs
+  cv_bridge
   std_msgs
+  image_transport
+  mavros_msgs
 )
+
+find_package(OpenCV REQUIRED COMPONENTS core calib3d)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -105,7 +112,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES monash_perception
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  CATKIN_DEPENDS roscpp rospy tf
 #  DEPENDS system_lib
 )
 
@@ -133,22 +140,12 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/monash_perception_node.cpp)
+## Specify libraries to link a library or executable target agains
 
-## Rename C++ executable without prefix
-## The above recommended prefix causes long target names, the following renames the
-## target back to the shorter version for ease of user use
-## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+add_executable(t265_undistort_node src/t265_undistort.cpp)
+target_link_libraries(t265_undistort_node
+  ${catkin_LIBRARIES} ${OpenCV_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -159,23 +156,21 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# catkin_install_python(PROGRAMS
+# install(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-## Mark executables for installation
-## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME}_node
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 
-## Mark libraries for installation
-## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
-# install(TARGETS ${PROJECT_NAME}
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+# install(DIRECTORY
+#   launch
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
 ## Mark cpp header files for installation
@@ -197,7 +192,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_monash_perception.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_vision_to_mavros.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
