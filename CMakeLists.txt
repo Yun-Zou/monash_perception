@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   image_transport
   mavros_msgs
+  apriltag_ros
 )
 
 find_package(OpenCV REQUIRED COMPONENTS core calib3d)
@@ -145,6 +146,11 @@ include_directories(
 add_executable(t265_undistort_node src/t265_undistort.cpp)
 target_link_libraries(t265_undistort_node
   ${catkin_LIBRARIES} ${OpenCV_LIBRARIES}
+)
+
+add_executable(apriltag_pose_node src/apriltag_pose.cpp)
+target_link_libraries(apriltag_pose_node
+  ${catkin_LIBRARIES}
 )
 
 #############
