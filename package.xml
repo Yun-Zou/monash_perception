@@ -55,6 +55,10 @@
   <depend>mavros_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>mavros</depend>
+  <depend>image_transport</depend>
+  <depend>cv_bridge</depend>
+  <depend>apriltag_ros</depend>
+  <depend>sensor_msgs</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

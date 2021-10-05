@@ -46,8 +46,7 @@ catkin_package(
 include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable( ${PROJECT_NAME} 
-  src/t265_depth_node.cpp 
-  src/t265_depth.cpp
+  src/apriltag_pose.cpp 
 )
 
 # add_executable(t265_undistort_node src/t265_undistort.cpp)
