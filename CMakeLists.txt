@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   image_transport
   mavros_msgs
+  geometry_msgs
   apriltag_ros
 )
 find_package(OpenCV 3 REQUIRED)
@@ -65,6 +66,12 @@ add_executable(apriltag_pose_node src/apriltag_pose.cpp)
 target_link_libraries(apriltag_pose_node
   ${catkin_LIBRARIES}
 )
+
+add_executable(fake_pose src/fake_pose.cpp)
+target_link_libraries(fake_pose
+  ${catkin_LIBRARIES}
+)
+
 
 #############
 ## Install ##

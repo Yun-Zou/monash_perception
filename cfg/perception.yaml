@@ -1,0 +1,15 @@
+frames_required: 3
+refresh_rate: 10
+target_id: 0
+
+camera_topic: /camera/fisheye1/image
+#
+
+# Camera Tranform
+camera_pos_x: 0
+camera_pos_y: 0
+camera_pos_z: 0
+camera_roll: 0
+camera_pitch: 0
+camera_yaw: 0
+camera_gamma_world: 0
