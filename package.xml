@@ -59,6 +59,8 @@
   <depend>cv_bridge</depend>
   <depend>apriltag_ros</depend>
   <depend>sensor_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>turtlesim</depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

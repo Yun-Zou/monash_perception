@@ -16,10 +16,13 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   image_transport
   mavros_msgs
+  visualization_msgs
   geometry_msgs
   apriltag_ros
+  turtlesim
 )
-find_package(OpenCV 3 REQUIRED)
+# find_package(OpenCV 3 REQUIRED)
+find_package(OpenCV REQUIRED COMPONENTS core calib3d)
 
 # ## Find catkin macros and libraries
 # ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -39,7 +42,7 @@ find_package(OpenCV 3 REQUIRED)
 
 
 catkin_package(
-    INCLUDE_DIRS include
+    # INCLUDE_DIRS include
     CATKIN_DEPENDS roscpp image_transport cv_bridge sensor_msgs
     DEPENDS OpenCV
 )
@@ -62,6 +65,11 @@ target_link_libraries( ${PROJECT_NAME}
   ${OpenCV_LIBS}
 )
 
+add_executable(t265_fisheye_undistort src/t265_fisheye_undistort.cpp)
+target_link_libraries(t265_fisheye_undistort
+  ${catkin_LIBRARIES}
+)
+
 add_executable(apriltag_pose_node src/apriltag_pose.cpp)
 target_link_libraries(apriltag_pose_node
   ${catkin_LIBRARIES}
@@ -71,6 +79,22 @@ add_executable(fake_pose src/fake_pose.cpp)
 target_link_libraries(fake_pose
   ${catkin_LIBRARIES}
 )
+
+add_executable(apriltag_tf src/apriltag_tf.cpp)
+target_link_libraries(apriltag_tf
+  ${catkin_LIBRARIES}
+)
+
+add_executable(turtle_tf_broadcaster src/turtle_tf_broadcaster.cpp)
+target_link_libraries(turtle_tf_broadcaster
+  ${catkin_LIBRARIES}
+)
+
+add_executable(turtle_tf_listener src/turtle_tf_listener.cpp)
+target_link_libraries(turtle_tf_listener ${catkin_LIBRARIES})
+
+add_executable(frame_tf_broadcaster src/frame_tf_broadcaster.cpp)
+target_link_libraries(frame_tf_broadcaster ${catkin_LIBRARIES})
 
 
 #############
