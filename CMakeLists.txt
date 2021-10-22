@@ -39,7 +39,7 @@ find_package(OpenCV 3 REQUIRED)
 
 
 catkin_package(
-    INCLUDE_DIRS include
+    # INCLUDE_DIRS include
     CATKIN_DEPENDS roscpp image_transport cv_bridge sensor_msgs
     DEPENDS OpenCV
 )
