@@ -65,28 +65,13 @@ target_link_libraries( ${PROJECT_NAME}
   ${OpenCV_LIBS}
 )
 
-add_executable(t265_fisheye_undistort src/t265_fisheye_undistort.cpp)
-target_link_libraries(t265_fisheye_undistort
-  ${catkin_LIBRARIES}
-)
-
-add_executable(apriltag_pose_node src/apriltag_pose.cpp)
-target_link_libraries(apriltag_pose_node
+add_executable(apriltag_pose src/apriltag_pose.cpp)
+target_link_libraries(apriltag_pose
   ${catkin_LIBRARIES}
 )
 
 add_executable(fake_pose src/fake_pose.cpp)
 target_link_libraries(fake_pose
-  ${catkin_LIBRARIES}
-)
-
-add_executable(apriltag_tf src/apriltag_tf.cpp)
-target_link_libraries(apriltag_tf
-  ${catkin_LIBRARIES}
-)
-
-add_executable(turtle_tf_broadcaster src/turtle_tf_broadcaster.cpp)
-target_link_libraries(turtle_tf_broadcaster
   ${catkin_LIBRARIES}
 )
 
