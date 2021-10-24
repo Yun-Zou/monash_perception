@@ -4,25 +4,21 @@
 
 ros::Publisher target_publisher;
 
-geometry_msgs::Pose fake_target;
-std::string frame_id = "/camera_link";
+geometry_msgs::PoseStamped fake_target;
+std::string frame_id = "/drone_local_frame";
 
 void init() {
-  fake_target.position.x = 2;
-  fake_target.position.y = 2;
-  fake_target.position.z = 0;
-  fake_target.orientation.x = 0.5;
-  fake_target.orientation.y = 0.5;
-  fake_target.orientation.z = 0.3;
-  fake_target.orientation.w = 0.4;
+  fake_target.pose.position.x = 0;
+  fake_target.pose.position.y = 0;
+  fake_target.pose.position.z = 0;
+  fake_target.pose.orientation.x = 0.0;
+  fake_target.pose.orientation.y = 0.0;
+  fake_target.pose.orientation.z = 0.0;
+  fake_target.pose.orientation.w = 1.0;
 }
 
 void publish_pose() {
-  geometry_msgs::PoseStamped msg;
-  msg.header.frame_id = frame_id;
-  msg.header.stamp = ros::Time::now();
-  msg.pose = fake_target;
-  target_publisher.publish(msg);
+  target_publisher.publish(fake_target);
 }
 
 void update_fake_target() {
@@ -30,9 +26,12 @@ void update_fake_target() {
   float x = ((double)rand() / (RAND_MAX))*amplitude - amplitude/2;
   float y = ((double)rand() / (RAND_MAX)) * amplitude - amplitude / 2;
 
-  fake_target.position.x += x;
-  fake_target.position.y += y;
-  fake_target.position.z = 0;
+  fake_target.header.frame_id = frame_id;
+  fake_target.header.stamp = ros::Time::now();
+
+  fake_target.pose.position.x += x;
+  fake_target.pose.position.y += y;
+  fake_target.pose.position.z = 0;
 }
 
 int main(int argc, char **argv) {
@@ -42,8 +41,7 @@ int main(int argc, char **argv) {
    
   init();
 
-  PerceptionController perception_controller;
-  perception_controller.init();
+  PerceptionController perception_controller(fake_pose);
   
 
   target_publisher = fake_pose.advertise<geometry_msgs::PoseStamped>(("/monash_perception/target"), 5);
@@ -56,6 +54,7 @@ int main(int argc, char **argv) {
 
     update_fake_target();
     publish_pose();
+    perception_controller.publish_rviz_marker(fake_target);
 
 
   }
