@@ -5,7 +5,8 @@
 ros::Publisher target_publisher;
 
 geometry_msgs::PoseStamped fake_target;
-std::string frame_id = "/drone_local_frame";
+// std::string frame_id = "/drone_local_frame";
+std::string frame_id = "/camera_fisheye1_optical_frame";
 
 void init() {
   fake_target.pose.position.x = 0;
@@ -46,7 +47,7 @@ int main(int argc, char **argv) {
 
   target_publisher = fake_pose.advertise<geometry_msgs::PoseStamped>(("/monash_perception/target"), 5);
 
-  ros::Rate rate(2.0);
+  ros::Rate rate(1.0);
   int counter = 0;
   while (ros::ok()) {
     ros::spinOnce();

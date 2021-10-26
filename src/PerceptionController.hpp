@@ -14,9 +14,9 @@ class PerceptionController {
 protected:
 
   // Params
-  double consecutive_frames_required;
-  double refresh_rate;
-  double target_id = 0;
+  int consecutive_frames_required = 3;
+  int refresh_rate;
+  int target_id = 0;
   double target_size = 0.288;
   std::string camera_topic;
   std::string camera_frame;
@@ -42,6 +42,8 @@ protected:
   void tag_callback(const apriltag_ros::AprilTagDetectionArray &msg);
 
   void found_target();
+  
+  void transform_frame();
 
 public:
   PerceptionController(ros::NodeHandle nh){init(nh);};

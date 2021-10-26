@@ -4,4 +4,4 @@ target_id: 0
 target_size: 0.144
 
 camera_topic: /camera/fisheye1/image
-camera_frame: /camera_odom_frame
+camera_frame: /camera_fisheye1_optical_frame
