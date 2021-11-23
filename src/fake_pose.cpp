@@ -1,6 +1,6 @@
-#include "PerceptionController.cpp"
+// Generate fake pose
 
-#include "ros/time.h"
+#include "PerceptionController.cpp"
 
 ros::Publisher target_publisher;
 
@@ -21,6 +21,10 @@ void publish_pose() {
   target_publisher.publish(fake_target);
 }
 
+/**
+ * @brief Increment/decrement the current location by random amount
+ * 
+ */
 void update_fake_target() {
   int amplitude = 2;
   float x = ((double)rand() / (RAND_MAX))*amplitude - amplitude/2;
@@ -46,7 +50,7 @@ int main(int argc, char **argv) {
 
   target_publisher = fake_pose.advertise<geometry_msgs::PoseStamped>(("/monash_perception/target"), 5);
 
-  ros::Rate rate(2.0);
+  ros::Rate rate(1.0);
   int counter = 0;
   while (ros::ok()) {
     ros::spinOnce();

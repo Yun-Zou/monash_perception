@@ -1,7 +1,9 @@
-consecutive_frames_required: 3
-refresh_rate: 10
-target_id: 0
-target_size: 0.144
+# Config file used for PerceptionController
 
-camera_topic: /camera/fisheye1/image
-camera_frame: /camera_odom_frame
+consecutive_frames_required: 3              # Consecutives frames found of target required to be a match
+target_id: 0                                # ID of AprilTag marker
+target_size: 0.144                          # Length of AprilTag marker       
+
+camera_topic: /camera/fisheye1/image_raw    # Raw image topic
+# camera_topic: /camera/fishseye1/rect/image  # Undistorted image
+camera_frame: /camera_odom_frame            # Origin frame of camera
