@@ -34,9 +34,4 @@ rosrun monash_perception fake_pose
 
 ## Issues
 
-## Future Work
-- Convert the detected AprilTag into local frame coordinates properly in found_target() in PerceptionController.cpp
-- Find more reliable detection settings
-- Use neural networks for detection at high altitudes
-- Optimise to use the Graphics card instead of the CPU for these tasks
-- Incorporate an additional better camera which can track better
+
