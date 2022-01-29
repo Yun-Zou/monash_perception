@@ -5,7 +5,8 @@
 ros::Publisher target_publisher;
 
 geometry_msgs::PoseStamped fake_target;
-std::string frame_id = "/drone_local_frame";
+// std::string frame_id = "/drone_local_frame";
+std::string frame_id = "/camera_fisheye1_optical_frame";
 
 void init() {
   fake_target.pose.position.x = 0;

@@ -51,7 +51,9 @@ void PerceptionController::tag_callback(const apriltag_ros::AprilTagDetectionArr
       // If found targets now equal frames_required, consider it found
       if (found_array.size() >= consecutive_frames_required) {
         found_target();
+        found_array.clear();
       }
+
       return;
     }
   }
@@ -61,8 +63,6 @@ void PerceptionController::tag_callback(const apriltag_ros::AprilTagDetectionArr
 }
 
 void PerceptionController::found_target() {
-
-  // Reset target pose
   target.pose.position.x = 0;
   target.pose.position.y = 0;
   target.pose.position.z = 0;
@@ -90,9 +90,9 @@ void PerceptionController::found_target() {
   target.pose.orientation.x = target.pose.orientation.x / size;
   target.pose.orientation.y = target.pose.orientation.y / size;
   target.pose.orientation.z = target.pose.orientation.z / size;
-  target.pose.orientation.w = target.pose.orientation.w / size;
+  target.pose.orientation.w = target.pose.orientation.w / size; 
 
-  target.header.frame_id = "/apriltag_frame";
+  target.header.frame_id = "/camera_fisheye1_optical_frame";
   target.header.stamp = found_array[size].pose.header.stamp;
 
   // Turn target pose into a transform
@@ -132,9 +132,7 @@ void PerceptionController::found_target() {
     target_publisher.publish(tf_target);
     publish_rviz_marker(tf_target);
   }
-
-  found_array.clear();
-}
+};
 
 void PerceptionController::init_params(ros::NodeHandle nh) {
 
@@ -172,7 +170,7 @@ void PerceptionController::publish_rviz_marker(
   // Set the frame ID and timestamp.  See the TF tutorials for information on
   // these.
   marker.header.frame_id = target.header.frame_id;
-  marker.header.stamp = target.header.stamp;
+  marker.header.stamp = ros::Time::now();
   marker.ns = "target";
   marker.id = 0;
   marker.type = visualization_msgs::Marker::CUBE;
@@ -185,7 +183,7 @@ void PerceptionController::publish_rviz_marker(
   // Set the scale of the marker -- 1x1x1 here means 1m on a side
   marker.scale.x = target_size;
   marker.scale.y = target_size;
-  marker.scale.z = 0.2f;
+  marker.scale.z = 0.1f;
 
   // Set the color -- be sure to set alpha to something non-zero!
   marker.color.r = 1.0f;
