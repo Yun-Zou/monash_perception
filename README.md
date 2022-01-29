@@ -3,7 +3,7 @@ This package handles the computer vision tasks and transforming it into data usa
 
 This package uses [AprilTags](https://github.com/AprilRobotics/apriltag) and [apriltags_ros](http://wiki.ros.org/apriltag_ros) to detect tags placed on objects which we are looking for. These then are converted into coordinates in the local frame of the drone for it to track. At the moment, it is only semi-reliable and works up to about 3m maximum, optimally in downwards angle.
 
-AprilTag detection is run on the Intel RealSense T265 Camera image feed which is a grayscale fisheye stereo feed. The fisheye image feed provides a wide FOV but it also is considered 'distorted' and therefore we may want to undistort the image to run apriltag detection if we want the best accuracy, but lessens FOV
+AprilTag detection is run on the Intel RealSense T265 Camera image feed which is a grayscale fisheye stereo feed. The fisheye image feed provides a wide FOV but it also is considered 'distorted' and therefore we may want to undistort the image to run apriltag detection if we want the best accuracy, but this lessens FOV
 
 The AprilTag used was the Tag16h5 family of AprilTags on an A3 piece of paper with the ID of 0. If you would like to change it, change the tag_family and standalone_tags settings in both settings.yaml and tags.yaml respectively. You can also change some settings in settings.yaml to increase speed of detection at the cost of range/accuracy. Read more in apriltag_ros for info.
 
@@ -31,7 +31,4 @@ Fake Pose
 ```
 rosrun monash_perception fake_pose
 ```
-
-## Issues
-
 
